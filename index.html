@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For My Labilabs</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@300;400;500;600&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- Falling Hearts Background -->
+  <div class="hearts-bg" id="heartsBg"></div>
+
+  <!-- Music Player -->
+  <div class="music-btn" id="musicBtn" title="Hold for player, click to play/pause">
+    <span class="music-icon" id="musicIcon">🎵</span>
+  </div>
+
+  <!-- Music Player Panel -->
+  <div class="player-panel" id="playerPanel">
+    <div class="player-header">
+      <span class="player-title-label">Now Playing</span>
+      <button class="player-close" id="playerClose">✕</button>
+    </div>
+
+    <!-- Song List -->
+    <div class="song-list" id="songList">
+      <!-- filled by JS -->
+    </div>
+
+    <!-- Progress + Controls -->
+    <div class="player-controls-wrap">
+      <div class="now-playing-name" id="nowPlayingName">—</div>
+      <div class="progress-wrap">
+        <span class="time-label" id="timeElapsed">0:00</span>
+        <input type="range" class="progress-bar" id="progressBar" value="0" min="0" max="100" step="0.1"/>
+        <span class="time-label" id="timeDuration">0:00</span>
+      </div>
+      <div class="player-controls">
+        <button class="ctrl-btn" id="btnRewind" title="Rewind 10s">-10</button>
+        <button class="ctrl-btn ctrl-prev" id="btnPrev" title="Previous">◀◀</button>
+        <button class="ctrl-btn ctrl-play" id="btnPlayPause" title="Play/Pause" style="padding-left:3px">▶</button>
+        <button class="ctrl-btn ctrl-next" id="btnNext" title="Next">▶▶</button>
+        <button class="ctrl-btn" id="btnSkip" title="Skip 10s">+10</button>
+      </div>
+    </div>
+  </div>
+
+  <audio id="bgMusic" loop></audio>
+
+  <!-- PAGE 1: PADLOCK -->
+  <div class="page active" id="page1">
+    <div class="page-content padlock-page">
+      <h1 class="page-title">For you my dine</h1>
+      <p class="page-subtitle">Hint: Special day mo :p</p>
+      <div class="padlock-wrap" id="padlockWrap">
+        <div class="padlock" id="padlock">
+          <div class="padlock-shackle"></div>
+          <div class="padlock-body">
+            <div class="padlock-keyhole">
+              <div class="keyhole-circle"></div>
+              <div class="keyhole-stem"></div>
+            </div>
+          </div>
+        </div>
+        <div class="padlock-msg" id="padlockMsg"></div>
+      </div>
+      <div class="code-display" id="codeDisplay">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <div class="numpad">
+        <button class="num-btn" data-num="1">1</button>
+        <button class="num-btn" data-num="2">2</button>
+        <button class="num-btn" data-num="3">3</button>
+        <button class="num-btn" data-num="4">4</button>
+        <button class="num-btn" data-num="5">5</button>
+        <button class="num-btn" data-num="6">6</button>
+        <button class="num-btn" data-num="7">7</button>
+        <button class="num-btn" data-num="8">8</button>
+        <button class="num-btn" data-num="9">9</button>
+        <button class="num-btn clear-btn" data-num="clear">✕</button>
+        <button class="num-btn" data-num="0">0</button>
+        <button class="num-btn enter-btn" data-num="enter">✓</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: BIRTHDAY COUNTDOWN -->
+  <div class="page" id="page2">
+    <div class="page-content countdown-page slide-up">
+      <div class="page-deco"></div>
+      <h1 class="page-title">Birthday Countdown!</h1>
+      <p class="page-subtitle">Now you can see how many days, hours, minutes, or even seconds!</p>
+      <div class="countdown-wrap">
+        <div class="countdown-box">
+          <span class="count-num" id="days">00</span>
+          <span class="count-label">Days</span>
+        </div>
+        <div class="countdown-sep">✦</div>
+        <div class="countdown-box">
+          <span class="count-num" id="hours">00</span>
+          <span class="count-label">Hours</span>
+        </div>
+        <div class="countdown-sep">✦</div>
+        <div class="countdown-box">
+          <span class="count-num" id="minutes">00</span>
+          <span class="count-label">Minutes</span>
+        </div>
+        <div class="countdown-sep">✦</div>
+        <div class="countdown-box">
+          <span class="count-num" id="seconds">00</span>
+          <span class="count-label">Seconds</span>
+        </div>
+      </div>
+      <p class="countdown-msg">Every second is one step closer to celebrate your 18th birthday!</p>
+    </div>
+    <div class="nav-bar">
+      <button class="nav-btn prev-btn" onclick="goToPage(1)">‹</button>
+      <div class="page-dots">
+        <span class="pdot active" onclick="goToPage(2)"></span>
+        <span class="pdot" onclick="goToPage(3)"></span>
+        <span class="pdot" onclick="goToPage(4)"></span>
+        <span class="pdot" onclick="goToPage(5)"></span>
+        <span class="pdot" onclick="goToPage(6)"></span>
+      </div>
+      <button class="nav-btn next-btn" onclick="goToPage(3)">›</button>
+    </div>
+  </div>
+
+  <!-- PAGE 3: ALBUM -->
+  <div class="page" id="page3">
+    <div class="page-content album-page slide-up">
+      <h1 class="page-title album-title">My month dump!</h1>
+      <p class="page-subtitle">You can add your best pictures every month here, just click mo lang mga pictures para ma add</p>
+      <div class="polaroid-grid">
+        <div class="polaroid float-1" data-index="0">
+          <label class="polaroid-img">
+            <input type="file" class="img-upload" accept="image/*"/>
+            <div class="polaroid-placeholder">
+              <span>📷</span>
+              <small>tap to add</small>
+            </div>
+            <img class="polaroid-photo" src="" alt=""/>
+          </label>
+          <div class="polaroid-caption">Wow</div>
+        </div>
+        <div class="polaroid float-2" data-index="1">
+          <label class="polaroid-img">
+            <input type="file" class="img-upload" accept="image/*"/>
+            <div class="polaroid-placeholder">
+              <span>📷</span>
+              <small>tap to add</small>
+            </div>
+            <img class="polaroid-photo" src="" alt=""/>
+          </label>
+          <div class="polaroid-caption">Yay</div>
+        </div>
+        <div class="polaroid float-3" data-index="2">
+          <label class="polaroid-img">
+            <input type="file" class="img-upload" accept="image/*"/>
+            <div class="polaroid-placeholder">
+              <span>📷</span>
+              <small>tap to add</small>
+            </div>
+            <img class="polaroid-photo" src="" alt=""/>
+          </label>
+          <div class="polaroid-caption">Wohoo</div>
+        </div>
+        <div class="polaroid float-1" data-index="3">
+          <label class="polaroid-img">
+            <input type="file" class="img-upload" accept="image/*"/>
+            <div class="polaroid-placeholder">
+              <span>📷</span>
+              <small>tap to add</small>
+            </div>
+            <img class="polaroid-photo" src="" alt=""/>
+          </label>
+          <div class="polaroid-caption">Lalala</div>
+        </div>
+        <div class="polaroid float-2" data-index="4">
+          <label class="polaroid-img">
+            <input type="file" class="img-upload" accept="image/*"/>
+            <div class="polaroid-placeholder">
+              <span>📷</span>
+              <small>tap to add</small>
+            </div>
+            <img class="polaroid-photo" src="" alt=""/>
+          </label>
+          <div class="polaroid-caption">Gandaa</div>
+        </div>
+        <div class="polaroid float-3" data-index="5">
+          <label class="polaroid-img">
+            <input type="file" class="img-upload" accept="image/*"/>
+            <div class="polaroid-placeholder">
+              <span>📷</span>
+              <small>tap to add</small>
+            </div>
+            <img class="polaroid-photo" src="" alt=""/>
+          </label>
+          <div class="polaroid-caption">Omki!</div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-bar">
+      <button class="nav-btn prev-btn" onclick="goToPage(2)">‹</button>
+      <div class="page-dots">
+        <span class="pdot" onclick="goToPage(2)"></span>
+        <span class="pdot active" onclick="goToPage(3)"></span>
+        <span class="pdot" onclick="goToPage(4)"></span>
+        <span class="pdot" onclick="goToPage(5)"></span>
+        <span class="pdot" onclick="goToPage(6)"></span>
+      </div>
+      <button class="nav-btn next-btn" onclick="goToPage(4)">›</button>
+    </div>
+  </div>
+
+  <!-- PAGE 4: SONG DEDICATION -->
+  <div class="page" id="page4">
+    <div class="page-content song-page slide-up">
+      <div class="page-deco"> </div>
+      <h1 class="page-title">My Dedication Song For You</h1>
+      <p class="page-subtitle">Every lyric of this song reminds me of you</p>
+      <div class="song-card">
+        <div class="song-vinyl">A song that says everything my heart can't find words for</div>
+        <p class="song-note">A song that says everything<br>my heart can't find words for~</p>
+        <a
+          href="https://youtu.be/Ozni6qgP_7Y?si=zk4RTESHK2QwiJp0"
+          target="_blank"
+          class="song-link"
+          id="songLink"
+        >
+          ▶ Play The Song hehe
+        </a>
+        <!-- Replace the YouTube link above with your actual YouTube link -->
+      </div>
+    </div>
+    <div class="nav-bar">
+      <button class="nav-btn prev-btn" onclick="goToPage(3)">‹</button>
+      <div class="page-dots">
+        <span class="pdot" onclick="goToPage(2)"></span>
+        <span class="pdot" onclick="goToPage(3)"></span>
+        <span class="pdot active" onclick="goToPage(4)"></span>
+        <span class="pdot" onclick="goToPage(5)"></span>
+        <span class="pdot" onclick="goToPage(6)"></span>
+      </div>
+      <button class="nav-btn next-btn" onclick="goToPage(5)">›</button>
+    </div>
+  </div>
+
+  <!-- PAGE 5: DRAWING CANVAS -->
+  <div class="page" id="page5">
+    <div class="page-content draw-page slide-up">
+      <h1 class="page-title">Draw of the day!</h1>
+      <p class="page-subtitle">Draw anything what you feel this day</p>
+
+      <div class="draw-toolbar">
+        <!-- Colour selector row -->
+        <div class="colour-swatches">
+          <button class="colour-wheel-btn" id="colourWheelBtn" title="Pick colour">
+            <canvas class="wheel-mini" id="wheelMini" width="28" height="28"></canvas>
+          </button>
+          <div class="active-colour-dot" id="activeColourDot"></div>
+          <!-- recent colour pills filled by JS -->
+          <div class="recent-pills" id="recentPills"></div>
+        </div>
+
+        <!-- Brush size -->
+        <div class="brush-wrap">
+          <span class="brush-icon">✏️</span>
+          <input type="range" id="brushSize" min="2" max="40" value="8" class="brush-slider"/>
+          <span class="brush-preview" id="brushPreview"></span>
+        </div>
+
+        <!-- Actions -->
+        <div class="draw-actions">
+          <button class="draw-btn" id="btnUndo" title="Undo last stroke">Undo</button>
+          <button class="draw-btn" id="btnClear" title="Clear all">Clear</button>
+          <button class="draw-btn save-btn" id="btnSave" title="Save drawing">Save</button>
+        </div>
+      </div>
+
+      <canvas id="drawCanvas" class="draw-canvas"></canvas>
+    </div>
+    <div class="nav-bar">
+      <button class="nav-btn prev-btn" onclick="goToPage(4)">‹</button>
+      <div class="page-dots">
+        <span class="pdot" onclick="goToPage(2)"></span>
+        <span class="pdot" onclick="goToPage(3)"></span>
+        <span class="pdot" onclick="goToPage(4)"></span>
+        <span class="pdot active" onclick="goToPage(5)"></span>
+        <span class="pdot" onclick="goToPage(6)"></span>
+      </div>
+      <button class="nav-btn next-btn" onclick="goToPage(6)">›</button>
+    </div>
+  </div>
+
+  <!-- PAGE 6: MAIL MESSAGE -->
+  <div class="page" id="page6">
+    <div class="page-content mail-page slide-up">
+      <h1 class="page-title">A Secret Message?!?!</h1>
+
+      <div class="envelope-scene" id="envelopeScene">
+
+        <!-- ENVELOPE -->
+        <div class="env-outer" id="envOuter" onclick="openEnvelope()">
+          <div class="env-back"></div>
+          <div class="env-side env-left"></div>
+          <div class="env-side env-right"></div>
+          <div class="env-bottom-flap"></div>
+          <div class="env-flap" id="envFlap"></div>
+          <div class="env-seal" id="envSeal"><span>♥</span></div>
+          <p class="env-hint" id="envHint">Open muh hihihihi</p>
+        </div>
+
+        <!-- PAPER slides up from envelope -->
+        <div class="paper-wrap" id="paperWrap">
+          <div class="paper" id="paper">
+            <div class="paper-lines"></div>
+            <div class="paper-content">
+              <div class="paper-head">For You My Lab!</div>
+              <div class="paper-body" id="letterBody"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="nav-bar">
+      <button class="nav-btn prev-btn" onclick="goToPage(5)">‹</button>
+      <div class="page-dots">
+        <span class="pdot" onclick="goToPage(2)"></span>
+        <span class="pdot" onclick="goToPage(3)"></span>
+        <span class="pdot" onclick="goToPage(4)"></span>
+        <span class="pdot" onclick="goToPage(5)"></span>
+        <span class="pdot active" onclick="goToPage(6)"></span>
+      </div>
+      <div style="width:44px"></div>
+    </div>
+  </div>
+
+  <!-- COLOUR PICKER MODAL — direct body child so fixed positioning works -->
+  <div class="colour-panel" id="colourPanel">
+    <div class="colour-panel-header">
+      <span class="colour-panel-title">Pick a colour</span>
+      <button class="colour-panel-close" id="colourPanelClose">✕</button>
+    </div>
+    <canvas class="hue-wheel" id="hueWheel" width="260" height="260"></canvas>
+    <div class="sl-row">
+      <label class="sl-label">Saturation</label>
+      <input type="range" class="sl-slider" id="satSlider" min="0" max="100" value="100"/>
+    </div>
+    <div class="sl-row">
+      <label class="sl-label">Lightness</label>
+      <input type="range" class="sl-slider" id="litSlider" min="5" max="95" value="55"/>
+    </div>
+    <div class="colour-preview-row">
+      <div class="colour-preview-swatch" id="colourPreviewSwatch"></div>
+      <span class="colour-preview-hex" id="colourPreviewHex">#ffffff</span>
+    </div>
+    <div class="colour-recent" id="colourRecent"></div>
+    <button class="colour-pick-btn" id="colourPickBtn">Use this colour</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
